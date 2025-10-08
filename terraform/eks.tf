@@ -1,16 +1,16 @@
 module "eks" {
-  source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = var.cluster_name
-  cluster_version = "1.30"
-  vpc_id          = aws_vpc.main.id
-  subnet_ids      = concat(aws_subnet.public[*].id, aws_subnet.private[*].id)
+  source  = "terraform-aws-modules/eks/aws"
+  version = "21.3.2"
 
-  eks_managed_node_groups = {
+  name       = var.cluster_name
+  vpc_id     = aws_vpc.main.id
+  subnet_ids = concat(aws_subnet.public[*].id, aws_subnet.private[*].id)
+
+  # Fargate only
+  fargate_profiles = {
     default = {
-      instance_types = ["t3.medium"]
-      min_size       = 1
-      max_size       = 3
-      desired_size   = 2
+      name      = "fp-default"
+      selectors = [{ namespace = "default" }]
     }
   }
 
@@ -20,10 +20,13 @@ module "eks" {
   }
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_name
+# Outputs
+output "eks_cluster_name" {
+  value = module.eks.cluster_id
 }
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_name
+output "eks_cluster_endpoint" {
+  value = module.eks.cluster_endpoint
 }
+
+

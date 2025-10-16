@@ -21,3 +21,10 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "cluster_version" {
+  description = "Kubernetes version for EKS cluster"
+  type        = string
+  default     = "1.30"
+}
+

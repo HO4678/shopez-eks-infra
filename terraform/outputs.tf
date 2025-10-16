@@ -11,5 +11,6 @@ output "rds_endpoint" {
 }
 
 output "vpc_id" {
-  value = aws_vpc.main.id
+  value = module.vpc.vpc_id   # use module output instead of aws_vpc.main
 }
+

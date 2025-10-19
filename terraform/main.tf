@@ -1,6 +1,6 @@
 resource "aws_security_group" "eks_sg" {
   name        = "shopez-eks-sg"
-  vpc_id = module.vpc.vpc_id
+  vpc_id      = module.vpc.vpc_id
   description = "Allow internal and EKS traffic"
 
   ingress {

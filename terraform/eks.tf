@@ -2,9 +2,9 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "21.3.2"
 
-  name              = var.cluster_name
-  vpc_id            = module.vpc.vpc_id
-  subnet_ids        = concat(module.vpc.public_subnets, module.vpc.private_subnets)
+  name               = var.cluster_name
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = concat(module.vpc.public_subnets, module.vpc.private_subnets)
   kubernetes_version = "1.30"
 
   eks_managed_node_groups = {
@@ -19,8 +19,8 @@ module "eks" {
 
   fargate_profiles = {
     default = {
-      name      = "fp-default"
-      selectors = [{ namespace = "default" }]
+      name       = "fp-default"
+      selectors  = [{ namespace = "default" }]
       subnet_ids = module.vpc.private_subnets
     }
   }
@@ -40,5 +40,6 @@ output "eks_cluster_name" {
 output "eks_cluster_endpoint" {
   value = module.eks.cluster_endpoint
 }
+
 
 

@@ -5,9 +5,9 @@ resource "aws_security_group" "rds_sg" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
     security_groups = [module.eks.cluster_primary_security_group_id] # allow traffic from EKS
   }
 
@@ -19,7 +19,7 @@ resource "aws_security_group" "rds_sg" {
   }
 
   tags = {
-    Name = "rds-sg"
+    Name    = "rds-sg"
     Project = "ShopEZ"
   }
 }
